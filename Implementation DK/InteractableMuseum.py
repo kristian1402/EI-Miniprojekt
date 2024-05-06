@@ -32,7 +32,7 @@ def mouseCallback(event, x, y, flags, param):
                 ret, frame = cap.read()
                 if not ret:
                     break
-                frame = cv.resize(frame, (1366,768))
+                resize_image_to_screen(frame, screen_resolution)
                 cv.imshow("Cut", frame)
                 if cv.waitKey(24) & 0xFF == ord('q'):
                     break  # Exit the loop if 'q' is pressed
@@ -48,7 +48,7 @@ def mouseCallback(event, x, y, flags, param):
                 ret, frame = cap.read()
                 if not ret:
                     break
-                frame = cv.resize(frame, (1366,768))
+                resize_image_to_screen(frame, screen_resolution)
                 cv.imshow("Candle Wax", frame)
                 if cv.waitKey(24) & 0xFF == ord('q'):
                     break  # Exit the loop if 'q' is pressed
@@ -98,8 +98,6 @@ def draw_rectangles(img):
 
 def mainImage():
     img = cv.imread("the scream.jpg")
-
-    print(screen_resolution)
 
     # Resize the image to fit screen resolution while maintaining aspect ratio
     resized_img = resize_image_to_screen(img, screen_resolution)
