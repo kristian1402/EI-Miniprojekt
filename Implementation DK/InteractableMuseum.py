@@ -6,10 +6,24 @@ screen_width, screen_height = pyautogui.size()
 screen_resolution = (screen_width, screen_height)
 
 
-def mouseCallback(event, x, y, flags, param):
+def mouseCallback(event, x, y, flags, img):
     if event == cv.EVENT_LBUTTONDOWN:
+
+        # Text
+        text_top_left = (int(img.shape[1] * 0.13), int(img.shape[0] * 0.13))
+        text_bottom_right = (int(img.shape[1] * 0.35), int(img.shape[0] * 0.17))
+
+        # Cut
+        cut_top_left = (int(img.shape[1] * 0.92), int(img.shape[0] * 0.3))
+        cut_bottom_right = (int(img.shape[1] * 0.97), int(img.shape[0] * 0.7))
+
+        # Candle wax
+        wax_top_left = (int(img.shape[1] * 0.63), int(img.shape[0] * 0.67))
+        wax_bottom_right = (int(img.shape[1] * 0.9), int(img.shape[0] * 0.93))
+
         # Condition for opening the "text" window
-        if 1 < x < 10 and 1 < y < 10:
+
+        if text_top_left[0] < x < text_bottom_right[0] and text_top_left[1] < y < text_bottom_right[1]:
             cv.destroyWindow("Interactive window")
             cap = cv.VideoCapture("text.mp4")
             while True:
@@ -25,7 +39,7 @@ def mouseCallback(event, x, y, flags, param):
             mainImage()
 
         # Condition for opening the "cut" window
-        if 740 < x < 770 and 200 < y < 600:
+        if cut_top_left[0] < x < cut_bottom_right[0] and cut_top_left[1] < y < cut_bottom_right[1]:
             cv.destroyWindow("Interactive window")
             cap = cv.VideoCapture("cut.mp4")
             while True:
@@ -41,7 +55,7 @@ def mouseCallback(event, x, y, flags, param):
             mainImage()
 
         # Condition for opening the "candle wax" window
-        if 520 < x < 700 and 700 < y < 900:
+        if wax_top_left[0] < x < wax_bottom_right[0] and wax_top_left[1] < y < wax_bottom_right[1]:
             cv.destroyWindow("Interactive window")
             cap = cv.VideoCapture("candle wax.mp4")
             while True:
@@ -108,7 +122,7 @@ def mainImage():
     cv.imshow("Interactive window", image_with_rectangles)
 
     # Set mouse callback function
-    cv.setMouseCallback("Interactive window", mouseCallback)
+    cv.setMouseCallback("Interactive window", mouseCallback, image_with_rectangles)
 
     while True:
         key = cv.waitKey(1)
